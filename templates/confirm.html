@@ -1,0 +1,12 @@
+<html>
+   <body>
+       <h1> ROUTER CONFIG RESULT </h1>
+       {% if config %}
+          <form action="/save" method="post">
+            <textarea name="config" rows="50" cols="200" placeholder={{ config }}>{{ config }}</textarea>
+            <p><input type="submit" value="保存"/></p>
+          </form>
+        {% endif %}
+        <a href="form"><button type="button">戻る</button></a>
+   </body>
+</html>

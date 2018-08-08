@@ -1,0 +1,26 @@
+<html>
+   <body>
+      <h1>Router Config CATCHER</h1>
+      {% if save %}
+        <h2>{{ save }}</h2>
+      {% endif %}
+
+      <form action = "/confirm" method = "POST">
+         <!-- <p>OS <input type = "text" name = "os" /></p> -->
+         <p>OS</p>
+         <select name="os" size=1  required >
+            <option value="eos">eos</option>
+            <option value="junos">junos</option>
+            <option value="iosxr">iosxr</option>
+            <option value="nxos">nxos</option>
+            <option value="nxos_ssh">nxos_ssh</option>
+            <option value="ios">ios</option>
+         </select>
+         <p>Address <input type = "text" name = "addr"  required /></p>
+         <p>User Name <input type ="text" name = "name" required /></p>
+         <p>Password <input type = "text" name = "pass"  required /></p>
+         <p>Port <input type ="text" name = "port"  required /></p>
+         <p><input type = "submit" value = "submit"  required /></p>
+      </form>
+   </body>
+</html>
