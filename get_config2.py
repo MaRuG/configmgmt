@@ -20,13 +20,20 @@ def get_config(os, addr, name, password, port):
 ####################
 # get driver
 ####################
-    driver = napalm.get_network_driver(os)
-    optional_args = {'port': port}
-    device = driver(
-        hostname=addr,
-        username=name,
-        password=password,
-        optional_args=optional_args)
+    if port != None:
+        driver = napalm.get_network_driver(os)
+        optional_args = {'port': port}
+        device = driver(
+            hostname=addr,
+            username=name,
+            password=password,
+            optional_args=optional_args)
+    elif port == None:
+        driver = napalm.get_network_driver(os)
+        device = driver(
+            hostname=addr,
+            username=name,
+            password=password)
 
     device.open()
 
