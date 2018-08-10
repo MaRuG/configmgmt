@@ -15,26 +15,60 @@ def now_time():
     now = datetime.datetime.today().strftime("%Y%m%d_%H%M%S")#フォーマットの指定
     return now
 
-def get_config(os, addr, name, password, port):
-####################
-# get driver
-####################
-    driver = napalm.get_network_driver(os)
-    optional_args = {'port': port}
-    device = driver(
-        hostname=addr,
-        username=name,
-        password=password,
-        optional_args=optional_args)
+def device_load(os, addr, name, password, port):
+    if port != None:
+        driver = napalm.get_network_driver(os)
+        optional_args = {'port': port}
+        device = driver(
+            hostname=addr,
+            username=name,
+            password=password,
+            optional_args=optional_args)
+    elif port == None:
+        driver = napalm.get_network_driver(os)
+        device = driver(
+            hostname=addr,
+            username=name,
+            password=password)
+
+    return device
+
+# device = device_load(os, addr, name, password, port)
+
+def get_config(device):
 
     device.open()
 
     config = device.get_config()
-    config = pprint.pformat(config, indent=4)
+    config = config["running"]
 
     print('Close session: ',)
     device.close()
     return config
+
+def add_config(device, conf):
+    device.open()
+    try:
+        device.load_merge_candidate(config=conf)
+    except:
+        device.load_merge_candidate(filename=conf)
+        
+    compare = device.compare_config()
+    device.close()
+
+    return compare
+
+def commit(device, choice):
+    device.open()
+    if choice == 'commit_ok':
+        device.commit_config()
+    elif choice == 'commit_no':
+        device.discard_config()
+
+    # config = get_config()
+    device.close()
+    # return config
+
 
 def write_config(configs):
     now = now_time()
@@ -47,6 +81,7 @@ def write_config(configs):
 
     with open('configs/%s_%s.config' % (hostname, now), "w") as f:
         f.write(configs)
+
 # args = sys.argv
 # print(args)
 # os = args[1]
