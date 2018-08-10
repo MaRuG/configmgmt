@@ -30,13 +30,10 @@ def device_load(os, addr, name, password, port):
             hostname=addr,
             username=name,
             password=password)
-
+        
     return device
 
-# device = device_load(os, addr, name, password, port)
-
 def get_config(device):
-
     device.open()
 
     config = device.get_config()
