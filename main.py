@@ -1,11 +1,10 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_file
 import get_config2
 app = Flask(__name__)
 
 @app.route('/')
 def hello():
-    name = "Hello World"
-    return name
+    return render_template('index.html')
 
 @app.route('/good')
 def good():
@@ -24,9 +23,12 @@ def add():
 def save():
    if request.method == 'POST':
      result = request.form
-     get_config2.write_config(result["config"])
+     get_config2.write_config(result["config"], result["file"])
+     filename = result["file"] + ".config"
+     f = "configs/" + filename
+     return send_file(f, attachment_filename=filename, as_attachment=True)
      
-     return render_template('form.html', save="SAVE DONE")
+     # return render_template('form.html', save="SAVE DONE")
 
 @app.route('/confirm', methods = ['POST', 'GET'])
 def confirm():

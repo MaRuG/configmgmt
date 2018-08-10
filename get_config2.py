@@ -67,16 +67,8 @@ def commit(device, choice):
     # return config
 
 
-def write_config(configs):
-    now = now_time()
-    ####################
-    # write config
-   ####################
-    matchtext = re.findall(r"host-name\s[a-zA-Z0-9]*", configs) 
-    hostname = str(set(matchtext)).replace("host-name ", "")
-    hostname =  re.sub(r"[\{\}\']", "", hostname)
-
-    with open('configs/%s_%s.config' % (hostname, now), "w") as f:
+def write_config(configs, filename):
+    with open('configs/%s.config' % (filename), "w") as f:
         f.write(configs)
 
 # args = sys.argv
