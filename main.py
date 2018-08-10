@@ -16,11 +16,14 @@ def good():
 def form():
    return render_template('form.html')
 
+@app.route('/add')
+def add():
+   return render_template('add.html')
+   
 @app.route('/save', methods = ['POST', 'GET'])
 def save():
    if request.method == 'POST':
      result = request.form
-     # print(type(result['config']))
      get_config2.write_config(result["config"])
      
      return render_template('form.html', save="SAVE DONE")
@@ -29,12 +32,27 @@ def save():
 def confirm():
    if request.method == 'POST':
      result = request.form
-     config = get_config2.get_config(result['os'],result['addr'],result['name'],result['pass'],result['port'])
-     # print(config) 
+     device = get_config2.device_load(result['os'],result['addr'],result['name'],result['pass'],result['port'])
+     config = get_config2.get_config(device)
      return render_template("confirm.html", config=config)
-   #    print(result)
-   #    print(result['addr'])
-   #    return render_template("confirm.html",result = result)
+
+@app.route('/compare', methods = ['POST', 'GET'])
+def compare():
+   if request.method == 'POST':
+     result = request.form
+     device = get_config2.device_load(result['os'],result['addr'],result['name'],result['pass'],result['port'])
+     comp = get_config2.add_config(device, result['config'])
+     
+     return render_template("compare.html", comp=comp, result=result)
+
+@app.route('/commit', methods = ['POST', 'GET'])
+def commit():
+   if request.method == 'POST':
+        result = request.form
+        device = get_config2.device_load(result['os'],result['addr'],result['name'],result['pass'],result['port'])
+        get_config2.commit(device, result["commit"])
+     
+        return render_template('form.html', save="COMMIT DONE")
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)

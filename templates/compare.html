@@ -1,0 +1,20 @@
+<html>
+   <body>
+       <h1> ROUTER CONFIG COMPARE </h1>
+       {% if comp %}
+          <textarea name="config" rows="50" cols="200" placeholder={{ comp }}>{{ comp }}</textarea></br>
+          <form action="/commit" method="post">
+              <p>OS <input type="text" name="os" value={{ result["os"] }} required/></p></br>
+              <p>Address <input type="text" name="addr" value={{ result["addr"] }} required/></p></br>
+              <p>Name <input type="text" name="name" value={{ result["name"] }} required/></p></br>
+              <p>Password <input type="text" name="pass" value={{ result["pass"] }} required/></p></br>
+              <p>Port <input type="text" name="port" value={{ result["port"] }} required/></p></br>
+            commit:
+            <p><input type="radio" value="commit_ok" name="commit"/>commit</p>
+            <p><input type="radio" value="commit_no" name="commit"/>no commit</p>
+            <button type="submit" class="btn btn-default">送信する</button>
+          </form>
+        {% endif %}
+        <a href="form"><button type="button">戻る</button></a>
+   </body>
+</html>
