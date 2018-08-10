@@ -5,6 +5,7 @@
 [ ] slackからのプルリク+マージに対応<br/>
 
 ## できてること
-* junosからのコンフィグ収集
-* 収集したコンフィグを`hostname_日付.config`で保存可能
+* iosxr, eos, junosからのコンフィグ収集
+* 収集したコンフィグを`configs/xxxxxx.config`で保存可能
+* configの設定可能
 
