@@ -6,18 +6,29 @@ app = Flask(__name__)
 def hello():
     return render_template('index.html')
 
-@app.route('/good')
-def good():
-    name = "Good"
-    return name
+# github webhook
+@app.route('/webhook', methods=['POST'])
+def webhook():
+    if request.method == 'POST':
+        j = request.json
+
+        if j.get('action') == "created":
+            comment = j.get('comment').get('body')
+
+        return'success', 200
+    else:
+        abort(400)
 
 @app.route('/form')
 def form():
    return render_template('form.html')
 
-@app.route('/add')
+@app.route('/add', methods = ['POST', 'GET'])
 def add():
-   return render_template('add.html')
+   if request.method == 'POST':
+     result = request.form
+     print(result)
+   return render_template('add.html', result=result)
    
 @app.route('/save', methods = ['POST', 'GET'])
 def save():
@@ -36,12 +47,13 @@ def confirm():
      result = request.form
      device = get_config2.device_load(result['os'],result['addr'],result['name'],result['pass'],result['port'])
      config = get_config2.get_config(device)
-     return render_template("confirm.html", config=config)
+     return render_template("confirm.html", config=config, result=result)
 
 @app.route('/compare', methods = ['POST', 'GET'])
 def compare():
    if request.method == 'POST':
      result = request.form
+     print(result)
      device = get_config2.device_load(result['os'],result['addr'],result['name'],result['pass'],result['port'])
      comp = get_config2.add_config(device, result['config'])
      

@@ -48,8 +48,8 @@ def add_config(device, conf):
     try:
         device.load_merge_candidate(config=conf)
     except:
-        device.load_merge_candidate(filename=conf)
-        
+        device.load_replace_candidate(filename=conf)
+
     compare = device.compare_config()
     device.close()
 

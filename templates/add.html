@@ -7,21 +7,16 @@
 
       <form action = "/compare" method = "POST">
          <!-- <p>OS <input type = "text" name = "os" /></p> -->
-         <p>OS</p>
-         <select name="os" size=1  required >
-            <option value="eos">eos</option>
-            <option value="junos">junos</option>
-            <option value="iosxr">iosxr</option>
-            <option value="nxos">nxos</option>
-            <option value="nxos_ssh">nxos_ssh</option>
-            <option value="ios">ios</option>
-         </select>
-         <p>Address <input type = "text" name = "addr"  required /></p>
-         <p>User Name <input type ="text" name = "name" required /></p>
-         <p>Password <input type = "text" name = "pass"  required /></p>
-         <p>Port <input type ="text" name = "port"/></p>
+         <p>OS <input type="text" name="os" value={{ result.os}} /></p>
+         <p>Address <input type = "text" name = "addr" value={{ result.addr }} /></p>
+         <p>User Name <input type ="text" name = "name" value={{ result.name }} /></p>
+         <p>Password <input type = "text" name = "pass" value={{ result.pass }} /></p>
+         {% if result.port %}
+            <p>Port <input type ="text" name = "port" value={{ result.port }} /></p>
+         {% endif %}
          追加設定</br>
-         <textarea name="config" rows="10" cols="30" required></textarea></br>
+         <textarea name="config" rows="10" cols="30"></textarea></br>
+         <input type="file" name="config" />
          <p><input type = "submit" value = "submit"  required /></p>
       </form>
       <a href="/"><button type="button">戻る</button></a>

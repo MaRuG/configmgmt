@@ -9,6 +9,15 @@
           </form>
         {% endif %}
         <a href="form"><button type="button">戻る</button></a>
-        <a href="add"><button type="button">追加設定</button></a>
+        <form action="/add" method="post">
+            <input type="hidden" name="os" value={{ result.os }} />
+            <input type="hidden" name="addr" value={{ result.addr }} />
+            <input type="hidden" name="name" value={{ result.name }} />
+            <input type="hidden" name="pass" value={{ result.pass }} />
+            {% if result.port %}
+                <input type="hidden" name="port" value={{ result.port }} />
+            {% endif %}
+            <input type="submit" value="追加設定" />
+        </form>
    </body>
 </html>
